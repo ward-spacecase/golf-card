@@ -5,11 +5,13 @@
     height: 100%;
 }
 body {
-    color: white;
-    letter-spacing: 15px;
-    font-weight: normal;
+    color: black;
     margin: 0;
     padding: 0;
     background: green url('../images/golf.jpg') center center fixed no-repeat;
     background-size: cover;
 }
+.modal-body {
+    text-align: center;
+}
+*:focus {outline:none !important}
