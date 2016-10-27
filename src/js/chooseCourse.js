@@ -18,25 +18,32 @@ function geoFindMe() {
     function success(position) {
         var latitude  = position.coords.latitude;
         var longitude = position.coords.longitude;
+            try {
+                golfHttp(latitude, longitude);
+            } catch(error) {
 
-            var domUpdate = golfHttp(latitude, longitude);
-
-                console.log(domUpdate);
+            }
                 output.html();
 
-    };
+    }
 
     function error() {
         output.html("Unable to retrieve your location");
 
-    };
+    }
 
     navigator.geolocation.getCurrentPosition(success, error);
 }
 
 function golfHttp(lat, long) {
-
     var xhr = new XMLHttpRequest();
+
+    var formData = new FormData();
+    formData.append('city', 'Lehi');
+    formData.append('latitude', lat);
+    formData.append('longitude', long);
+    formData.append('radius', 50);
+
     xhr.onreadystatechange = function () {
 
         console.log(this.readyState + '  ' + this.status);
@@ -45,19 +52,21 @@ function golfHttp(lat, long) {
             console.log(xhr.responseText);
             var jsonReply = JSON.parse(xhr.responseText);
 
-           if(jsonReply.meta.courses.total <= 0) {
-               return '<h1>No courses found</h1> <form><label for="city">City: </label><input type="text" name="city">' +
-                   ' <button type="submit" class="btn btn-primary"></button></form>';
-           }
+            $( '.modal-body' ).html('<h1>' + jsonReply.course.name +
+                '</h1><hr class="style18"><h2>' + jsonReply.course.city + ', ' + jsonReply.course.state_or_province +
+                '</h2><h3>' + jsonReply.course.addr_1 + '</h3>');
+
+            $('#choose').removeClass('disabled btn-default', 1000, 'swing');
+            $('#choose').addClass('btn-success')
+
         }
     };
-    xhr.open("POST", "https://golf-courses-api.herokuapp.com/courses/search", false);
+    xhr.open("GET", "https://golf-courses-api.herokuapp.com/courses/11819", false);
+    // xhr.open("POST", "https://golf-courses-api.herokuapp.com/courses/search", false);
     xhr.setRequestHeader('contentType', 'application/json');
-        xhr.send({
-            latitude: lat,
-            longitude: long,
-            radius: '50',
-        });
+
+        xhr.send();
+        // xhr.send(formData);
 
 }
 
