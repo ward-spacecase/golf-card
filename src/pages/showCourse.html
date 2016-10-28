@@ -12,24 +12,13 @@
     <link rel="stylesheet" href="../styles/chooseCourse.css">
     <link rel="stylesheet" href="../styles/bootstrap/font-awesome-4.6.3/css/font-awesome.min.css">
     <style>
-        hr.style18 {
-            height: 30px;
-            border-style: solid;
-            border-color: #8c8b8b;
-            border-width: 1px 0 0 0;
-            border-radius: 20px;
-        }
-        hr.style18:before {
-            display: block;
-            content: "";
-            height: 30px;
-            margin-top: -31px;
-            border-style: solid;
-            border-color: #8c8b8b;
-            border-width: 0 0 1px 0;
-            border-radius: 20px;
-        }
-
+      .bg-success {
+          background-color: #356d00;
+          width: 100vw;
+      }
+      .container-fluid {
+          padding: 0;
+      }
     </style>
 </head>
 
@@ -37,28 +26,42 @@
 
 <div class="background">
 
+    <div class="container-fluid">
+        <nav class="navbar bg-success">
+            <img src="../images/logo_teetime.png" width="200px">
+        </nav>
+
+    </div>
     <div class="container">
-
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h4 class="modal-title">Start Game: </h4>
-
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button id="choose" type="button" class="btn btn-default disabled">Choose</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        <table class="table table-hover table-inverse">
+            <thead>
+            <tr>
+                <th>Hole</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>

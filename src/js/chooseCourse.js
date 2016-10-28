@@ -51,7 +51,8 @@ function golfHttp(lat, long) {
         if(this.readyState == 4 && this.status == 200) {
             console.log(xhr.responseText);
             var jsonReply = JSON.parse(xhr.responseText);
-            $("body").data( "userData", jsonReply);
+
+            $("body").data( "userData", jsonReply);     //send response to new page
 
 
             $( '.modal-body' ).html('<h1>' + jsonReply.course.name +
