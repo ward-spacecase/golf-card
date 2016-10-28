@@ -51,6 +51,8 @@ function golfHttp(lat, long) {
         if(this.readyState == 4 && this.status == 200) {
             console.log(xhr.responseText);
             var jsonReply = JSON.parse(xhr.responseText);
+            $("body").data( "userData", jsonReply);
+
 
             $( '.modal-body' ).html('<h1>' + jsonReply.course.name +
                 '</h1><hr class="style18"><h2>' + jsonReply.course.city + ', ' + jsonReply.course.state_or_province +
@@ -71,5 +73,8 @@ function golfHttp(lat, long) {
 }
 
 
+function startCourse() {
+    window.open('showCourse.html')
+}
 
 
