@@ -13,21 +13,20 @@
     <link rel="stylesheet" href="../styles/bootstrap/font-awesome-4.6.3/css/font-awesome.min.css">
 <style>
     hr.style18 {
-        height: 30px;
-        border-style: solid;
-        border-color: #8c8b8b;
-        border-width: 1px 0 0 0;
-        border-radius: 20px;
+        border-bottom: 2px solid #486648;
     }
-    hr.style18:before {
-        display: block;
-        content: "";
-        height: 30px;
-        margin-top: -31px;
-        border-style: solid;
-        border-color: #8c8b8b;
-        border-width: 0 0 1px 0;
-        border-radius: 20px;
+    .player {
+        background-color: #ffe9c8;
+        width: 100%;
+        padding: 10px 0;
+        margin: 5px;
+    }
+    .player-name {
+        padding-right: 20vw;
+        margin-left: 10px;
+    }
+    .tee-type-select {
+        right: 2px;
     }
 
 </style>
@@ -39,7 +38,7 @@
 
     <div class="container">
 
-        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade" id="myModal" role="dialog"  data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog">
 
                     <!-- Modal content-->
@@ -53,7 +52,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button id="choose" type="button" onclick="startCourse()" class="btn btn-default disabled">Choose</button>
+                            <button id="choose" type="button" class="btn btn-default disabled">Next</button>
                         </div>
                     </div>
 
@@ -62,7 +61,9 @@
     </div>
 
 </div>
+<div class="hold"></div>
 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE3YDOqmKDhBA5tef5zooBKltLuwcDwcw&libraries=places"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../js/chooseCourse.js"></script>
