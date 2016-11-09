@@ -118,6 +118,7 @@ function nextSlide(course,locationForSearch) {
 
 function goBack() {
 
+    $('.modal-title').html('Choose Course: ');
     $('.modal-footer').html('<button id="choose" type="button" class="btn btn-success">Next</button>');
     $('#choose').click(function () {nextSlide(coursesGlobal.courses[$('#courses-select option:selected').val()],
         locationGlobal)});
@@ -130,6 +131,7 @@ function startCourse() {
     window.open('showCourse.html');
 }
 function yesClick() {
+    $('.modal-title').html('Add Players ');
     $( '.modal-body' ).html('<h1>' + globalCourse.name +
         '</h1><hr class="style18">');
     $.ajax({
@@ -145,18 +147,20 @@ function yesClick() {
             $('#yes').attr('onclick', 'startCourse()');
             $("body").data( "course", results);     //send response to new page
 
-                                                                            //player Div
-            $('.modal-body').append('<div class="player"></div>');
-            $('.player').append('<span class="player-name">Player 1</span> <select name="courses" class="tee-type-select"></select>');
 
-                                                                            //send player div
+            newPlayer(results);
 
-            for(var i = 0; i < results.course.holes[0].tee_boxes.length; i++) {
-                if(results.course.holes[0].tee_boxes[i].tee_type != 'auto change location')
-                 $('.tee-type-select').append('<option value="' + i + '">'+ results.course.holes[0].tee_boxes[i].tee_type + '</option>');
-            }
+
+
         }
     });
+}
+var playerCount = [];
+function newPlayer(results) {
+
+     var player = new Player(playerCount.length + 1);
+    player.addPlayer(results);
+    playerCount.push(player);
 }
 
 function weatherAPI() {
