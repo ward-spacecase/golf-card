@@ -47,7 +47,7 @@ function golfHttp(lat, long) {
 
     var formData = {latitude: lat, longitude: long, radius: 100};
 
-    $.post("http://golf-courses-api.herokuapp.com/courses/", formData, function (data) {
+    $.post("https://golf-courses-api.herokuapp.com/courses/", formData, function (data) {
 
         data = JSON.parse(data);
         console.log(data.courses);
@@ -135,7 +135,7 @@ function yesClick() {
     $( '.modal-body' ).html('<h1>' + globalCourse.name +
         '</h1><hr class="style18">');
     $.ajax({
-        url: 'http://golf-courses-api.herokuapp.com/courses/' + globalCourse.id,
+        url: 'https://golf-courses-api.herokuapp.com/courses/' + globalCourse.id,
         type: 'GET',
         success: function (results) {
 
@@ -147,9 +147,14 @@ function yesClick() {
             $('#yes').attr('onclick', 'startCourse()');
             $("body").data( "course", results);     //send response to new page
 
-
-            newPlayer(results);
-
+            console.log(playerCount.length);
+            if(playerCount.length == 0 || playerCount == null) {
+                newPlayer(results);
+            } else {
+                for(var i = 0; i < playerCount.length; i++){
+                    playerCount[i].addPlayer(results);
+                }
+            }
 
 
         }
@@ -167,7 +172,7 @@ function weatherAPI() {
     $.ajax({
         crossDomain: true,
        type: 'GET',
-        url: 'http://api.wunderground.com/api/5a97c242b3faac59/forecast/q/' + locationGlobal.lat() + ',' + locationGlobal.lng() + '.json',
+        url: 'https://api.wunderground.com/api/5a97c242b3faac59/forecast/q/' + locationGlobal.lat() + ',' + locationGlobal.lng() + '.json',
         success: function (data) {
             console.log(data);
             $( '.modal-body h1' ).append('<img src="' + data.forecast.simpleforecast.forecastday[0].icon_url + '">');

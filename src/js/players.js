@@ -1,15 +1,3 @@
-function editName (element) {
-
-    $('#input-' + element).val(name).css({'margin-left': '5px', 'margin-right': '15px'}).focus().select().attr('onfocusout','editNameOut(this.id)');
-}
-
-
-function editNameOut(elementId) {
-    var newName = $('#' + elementId).val();
-    $('#' + elementId).prev().prev().html(newName);
-    $('#' + elementId).remove().prev().remove().prev().show();
-}
-
 
 var Player = function(playerNumber) {
 
@@ -21,14 +9,18 @@ var Player = function(playerNumber) {
 Player.prototype.editName = function () {
     $('#player-name' + this.playerNumber).hide();
     $('#input-' + this.playerNumber).show().val(this.name).focus().select().prev().show();
+    $('#input-'+ this.playerNumber).attr('onfocusout', 'playerCount['+ this.playerNumber + '-1].editNameOut()');
 };
 
-
+Player.prototype.editNameOut = function () {
+  var newName = $('#input-'+ this.playerNumber).val();
+    this.name = newName;
+    $('#input-'+this.playerNumber).hide().next().html(this.name).show().prev().prev().hide();
+};
 
 Player.prototype.addPlayer = function (results) {
 
-    console.log('addPlayer');
-    console.log(results);
+
     $('.modal-body').append('<div class="player" id="player'+ this.playerNumber + '"></div>');
 
     $('#player' + this.playerNumber ).append('<i class="fa fa-check-square" aria-hidden="true"></i><input type="text" id="input-' + this.playerNumber +
@@ -36,7 +28,7 @@ Player.prototype.addPlayer = function (results) {
         '</span> <select name="courses" id="tee-type-select' +
         this.playerNumber + '"></select><i class="fa fa-times" aria-hidden="true" style="margin-left: 10px;"></i>');
 
-    $('#player-name' + this.playerNumber).attr('onclick', 'playerCount['+ this.playerNumber + '-1].editName()');
+    $('#player-name' + this.playerNumber).attr(     'onclick', 'playerCount['+ this.playerNumber + '-1].editName()'     );
 
     $('#input-'+this.playerNumber).hide().prev().hide();
 
