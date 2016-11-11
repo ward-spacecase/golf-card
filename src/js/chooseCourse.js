@@ -50,8 +50,6 @@ function golfHttp(lat, long) {
     $.post("https://golf-courses-api.herokuapp.com/courses/", formData, function (data) {
 
         data = JSON.parse(data);
-        console.log(data.courses);
-
 
 
             $('.modal-body').html('<select name="courses" id="courses-select"></select>');
@@ -98,7 +96,7 @@ function nextSlide(course,locationForSearch) {
         $('.placeholder').remove();
         if (status == google.maps.places.PlacesServiceStatus.OK) {
 
-            console.log(results);
+
             place = results[0];
                 if(place.photos.length > 0) {
                     photoURL = place.photos[0].getUrl({'maxWidth': 400});
@@ -128,6 +126,14 @@ function goBack() {
     }
 }
 function startCourse() {
+    for(var i = 1; i <= Object.keys(playerCount).length; i++) {
+        if(playerCount['player' +i] != null && playerCount['player' +i] != undefined)
+            playerCount['player' + i].tee_type = $('#tee-type-select'+i+' option:selected').text();
+    }
+    playerCount.playerCount = Object.keys(playerCount).length;
+    console.log(playerCount);
+    $('body').data("players", playerCount);
+
     window.open('showCourse.html');
 }
 function yesClick() {
@@ -139,20 +145,24 @@ function yesClick() {
         type: 'GET',
         success: function (results) {
 
-            console.log('get Course results: ');
-            console.log(results);
             results = JSON.parse(results);
-
+            globalCourse = results;
             $('#yes')[0].innerText = 'Done';
             $('#yes').attr('onclick', 'startCourse()');
             $("body").data( "course", results);     //send response to new page
 
-            console.log(playerCount.length);
-            if(playerCount.length == 0 || playerCount == null) {
-                newPlayer(results);
+
+            if(Object.keys(playerCount).length == 0 || playerCount == null) {
+                newPlayer();
+                $('.modal-body').append('<div id="add-player" class="player" onclick="newPlayer()">Add Player <i class="fa fa-plus-circle"></i></div>');
             } else {
-                for(var i = 0; i < playerCount.length; i++){
-                    playerCount[i].addPlayer(results);
+                for(var i = 1; i <= Object.keys(playerCount).length; i++){
+                    playerCount['player'+ i].addPlayer(globalCourse);
+                }
+                if(Object.keys(playerCount).length > 3) {
+                    $('#add-player').hide();
+                } else {
+                    $('#add-player').appendTo('.modal-body');
                 }
             }
 
@@ -160,12 +170,22 @@ function yesClick() {
         }
     });
 }
-var playerCount = [];
-function newPlayer(results) {
+var playerCount = {};
+function newPlayer() {
+    var playerId = 1;
+    while(playerCount['player'+playerId] != null || playerCount['player'+playerId] != undefined) {
+        playerId++;
+    }
+     var player = new Player(playerId);
+    player.addPlayer(globalCourse);
 
-     var player = new Player(playerCount.length + 1);
-    player.addPlayer(results);
-    playerCount.push(player);
+    if(Object.keys(playerCount).length > 3) {
+        $('#add-player').hide();
+    } else {
+        $('#add-player').appendTo('.modal-body');
+    }
+    playerCount['player' + player.playerNumber] = player;
+
 }
 
 function weatherAPI() {
@@ -174,9 +194,10 @@ function weatherAPI() {
        type: 'GET',
         url: 'https://api.wunderground.com/api/5a97c242b3faac59/forecast/q/' + locationGlobal.lat() + ',' + locationGlobal.lng() + '.json',
         success: function (data) {
-            console.log(data);
+
             $( '.modal-body h1' ).append('<img src="' + data.forecast.simpleforecast.forecastday[0].icon_url + '">');
         }
     });
 }
+
 
