@@ -71,7 +71,7 @@ bottom: 0;
     width: 0;
     border-right: solid 2px white;
 }
-@font-face { font-family: "Overwatch"; src: url("http://us.battle.net/forums/static/fonts/bignoodletoo/bignoodletoo.woff") format('woff'); }
+@font-face { font-family: "Overwatch"; src: url("https://us.battle.net/forums/static/fonts/bignoodletoo/bignoodletoo.woff") format('woff'); }
 .small-text {
     color: #b28956;
     font-size: 35px;
