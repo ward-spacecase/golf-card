@@ -40,20 +40,44 @@ function makeTable() {
         tableBody2.hide();
     }
 
+
     for(var key in players) {
         if(!String(key).includes('playerCount')) {
             tableBody1.append('<tr class="'+ key + '-row-a player"><th>'+ players[key].name + '</th></tr>');
             tableBody2.append('<tr class="'+ key + '-row-b player"><th>'+ players[key].name + '</th></tr>');
+
+            tableBody1.append('<tr class="'+ key + '-yards-a yardage"><th>'+ players[key].tee_type + '</th></tr>');
+            tableBody2.append('<tr class="'+ key + '-yards-b yardage"><th>'+ players[key].tee_type + '</th></tr>');
+            $('.yardage').css({'background-color':'#f6eee3', 'max-height': '10px', 'font-size': '12px', 'color': '#aaaaaa'});
             players[key]['hole_scores'] = [];
+            var tee_box_num = 0;
+            for(var tb = 0; tb < course.course.holes[0].tee_boxes; tb++) {
+                if(players[key].tee_type == course.course.holes[i].tee_boxes[tb].tee_type) {
+                    tee_box_num = tb;
+                }
+            }
             for(var i = 0; i < 9; i++) {
                 players[key].hole_scores[i] = 0;
                 players[key].hole_scores[i+9] = 0;
                 $('.' +key+'-row-a').append('<td><input id="' +
                    key + '-hole-' + i + '" type="number" min="1" max="9" maxlength="1" onfocusout="javascript: if(this.value.length == 1) showNewScores(this.id,this.value);" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); else if(this.value==0) this.value=null;"></td>');
-                $('.' +key+'-row-b').append('<td><input id="' +
-                    key + '-hole-' + (i+9) + '" type="number" min="1" max="9" maxlength="1" onfocusout="javascript: if(this.value.length == 1) showNewScores(this.id,this.value);"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); else if(this.value==0) this.value=null;"></td>');
+
+                $('.'+key+'-yards-a').append('<td>' + course.course.holes[i].tee_boxes[tee_box_num].yards + '</td>');
+
+                if(course.course.holes.length > 9) {
+                    $('.' + key + '-row-b').append('<td><input id="' +
+                        key + '-hole-' + (i + 9) + '" type="number" min="1" max="9" maxlength="1" onfocusout="javascript: if(this.value.length == 1) showNewScores(this.id,this.value);"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); else if(this.value==0) this.value=null;"></td>');
+
+                    $('.' + key + '-yards-b').append('<td>' + course.course.holes[i + 9].tee_boxes[tee_box_num].yards + '</td>');
+                } else {
+                    tableBody2.prev().hide();
+                }
 
             }
+
+            $('.'+key+'-yards-a').append('<td></td>');
+            $('.'+key+'-yards-b').append('<td></td><td></td>');
+
             players[key].tots = {};
             players[key].tots.in = 0;
             players[key].tots.out = 0;

@@ -130,6 +130,11 @@ function startCourse() {
         if(playerCount['player' +i] != null && playerCount['player' +i] != undefined)
             playerCount['player' + i].tee_type = $('#tee-type-select'+i+' option:selected').text();
     }
+    var limit = 1;
+    for(var key in playerCount) {
+        playerCount[key].tee_type = $('#tee-type-select'+limit+' option:selected').text();
+        limit++;
+    }
     playerCount.playerCount = Object.keys(playerCount).length;
     console.log(playerCount);
     $('body').data("players", playerCount);

@@ -1,6 +1,6 @@
 
 var Player = function(playerNumber) {
-
+    
   this.playerNumber = playerNumber;
     this.name = 'player';
 
